@@ -1,0 +1,77 @@
+<!-- activity_main.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+  <TextView
+      android:id="@+id/questionTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      android:text="Are you a..."
+      android:textColor="@color/dark_green"
+      android:textSize="20sp" />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center">
+
+    <!-- Volunteer Button -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+      <ImageButton
+          android:id="@+id/volunteerButton"
+          android:layout_width="175dp"
+          android:layout_height="117dp"
+          android:layout_marginEnd="1dp"
+          android:background="@drawable/custom_button"
+          android:src="@drawable/volunteer_icon"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Volunteer"
+          android:textColor="@color/dark_green"
+          android:textSize="16sp"
+          android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Organizer Button -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+      <ImageButton
+          android:id="@+id/organiserButton"
+          android:layout_width="175dp"
+          android:layout_height="117dp"
+          android:layout_marginStart="1dp"
+          android:background="@drawable/custom_button"
+          android:src="@drawable/organiser_icon"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Organiser"
+          android:textColor="@color/dark_green"
+          android:textSize="16sp"
+          android:gravity="center"/>
+    </LinearLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

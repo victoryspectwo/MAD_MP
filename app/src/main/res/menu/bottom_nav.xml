@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/addEvents"
+        android:icon="@drawable/icon_addevent"
+        android:title="Add Event">
+    </item>
+    <item
+        android:id="@+id/currentEvents"
+        android:icon="@drawable/icon_current"
+        android:title="Current">
+    </item>
+    <item
+        android:id="@+id/getMap"
+        android:icon="@drawable/icon_map"
+        android:title="Map">
+    </item>
+
+</menu>
