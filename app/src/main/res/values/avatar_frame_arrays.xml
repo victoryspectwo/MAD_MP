@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="avatar_frame_arrays">
+        <item>custom_button</item>
+        <item>custom_expbar</item>
+        <!-- Add more items as needed for each image -->
+    </array>
+</resources>

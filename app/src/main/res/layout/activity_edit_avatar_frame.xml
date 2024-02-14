@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- for some reason there are 2 linear layouts !-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".volunteer.edit_avatar_frame">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="15dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+
+            <!-- Avatar Frame -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/volun_edit_avatar_frame"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"/>
+
+            <!-- Actual Avatar -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/volun_edit_avatar"
+                android:layout_width="90dp"
+                android:layout_height="90dp"/>
+
+        </FrameLayout>
+
+        <Spinner
+            android:id="@+id/volun_edit_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
