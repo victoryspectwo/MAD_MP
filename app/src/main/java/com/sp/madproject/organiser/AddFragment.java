@@ -1,5 +1,7 @@
 package com.sp.madproject.organiser;
 
+import android.app.Dialog;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +23,11 @@ import com.android.volley.RequestQueue;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.sp.madproject.ActionBarVisibilityListener;
 import com.sp.madproject.R;
 
@@ -28,6 +35,7 @@ import com.sp.madproject.R;
 public class AddFragment extends Fragment {
 
     private ImageView headerImage;
+    private ImageView iv_qr;
     private FloatingActionButton imageAdd;
     private TextInputLayout titleLayout;
     private TextInputEditText eventTitle;
@@ -79,7 +87,26 @@ public class AddFragment extends Fragment {
         });
 
         submitButton = view.findViewById(R.id.submit_button);
-        //submitButton.setOnClickListener();
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.dialog_image);
+                iv_qr = dialog.findViewById(R.id.dialog_image_view);
+
+                generateQR(); // Move the method call after iv_qr initialization
+
+                Button closeButton = dialog.findViewById(R.id.close_dialog_button);
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View r) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
 
         ((ActionBarVisibilityListener) requireActivity()).setActionBarVisibility(false);
@@ -109,6 +136,20 @@ public class AddFragment extends Fragment {
     @Override
     public void onDestroyView(){
         super.onDestroyView();
+    }
+
+    private void generateQR() {
+        String text = "tgyh"; //edit_input.getText().toString().trim();
+        MultiFormatWriter writer = new MultiFormatWriter();
+        try {
+            BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, 1200, 1200);
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap bitmap = encoder.createBitmap(matrix);
+            iv_qr.setImageBitmap(bitmap);
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
 }

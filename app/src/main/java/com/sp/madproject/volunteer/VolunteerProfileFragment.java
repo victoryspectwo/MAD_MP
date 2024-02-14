@@ -81,6 +81,9 @@ public class VolunteerProfileFragment extends Fragment {
         if (item.getItemId() == R.id.volun_edit_name_password) {
             intent = new Intent(requireActivity(), edit_profile.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.volun_edit_frame) {
+            intent = new Intent(requireActivity(), edit_avatar_frame.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

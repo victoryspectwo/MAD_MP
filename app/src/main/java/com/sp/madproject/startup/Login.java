@@ -70,11 +70,11 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            if(userType == "organiser"){
+                            if("organiser".equals(userType)){
                                 // Sign in success, update UI with the signed-in user's information
                                 Toast.makeText(Login.this, "Welcome back, organiser!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), OrganiserMainActivity.class));
-                            } else if (userType == "volunteer") {
+                            } else if ("volunteer".equals(userType)) {
                                 Toast.makeText(Login.this, "Welcome back, volunteer!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), VolunteerMain.class));
                             }

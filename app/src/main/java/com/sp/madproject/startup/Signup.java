@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.sp.madproject.organiser.OrganiserMainActivity;
 import com.sp.madproject.R;
+import com.sp.madproject.volunteer.VolunteerMain;
 
 public class Signup extends AppCompatActivity {
 
@@ -87,13 +88,23 @@ public class Signup extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 /***NEED TO ACCOUNT FOR ORGANISER AND USER CASES ***/
-                                if (task.isSuccessful() && userType == "organiser") {
-                                    // Sign up success, update UI with the signed-in user's information
-                                    Toast.makeText(Signup.this, "User created!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), OrganiserMainActivity.class));
+                                if (task.isSuccessful()) {
+                                    if ("organiser".equals(userType)) {
+                                        // Sign up success for an organiser
+                                        Toast.makeText(Signup.this, "User created!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), OrganiserMainActivity.class));
+                                    } else if ("volunteer".equals(userType)){
+                                            // Sign up success for a volunteer
+                                            Toast.makeText(Signup.this, "User created!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(), VolunteerMain.class));
+                                    }
                                 } else {
                                     // If sign up fails, display a message to the user.
-                                    Toast.makeText(Signup.this, "Registration failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    if (task.getException() != null) {
+                                        Toast.makeText(Signup.this, "Registration failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(Signup.this, "Registration failed. Unknown error occurred.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         });
