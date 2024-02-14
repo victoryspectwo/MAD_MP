@@ -21,12 +21,16 @@ import com.android.volley.RequestQueue;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.sp.madproject.ActionBarVisibilityListener;
 import com.sp.madproject.R;
 
 
 public class AddFragment extends Fragment {
 
+    FirebaseAuth cmAuth;
+    FirebaseFirestore mStore;
     private ImageView headerImage;
     private FloatingActionButton imageAdd;
     private TextInputLayout titleLayout;
