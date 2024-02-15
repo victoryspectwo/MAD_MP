@@ -44,15 +44,15 @@ public class VolunteerMain extends AppCompatActivity {
         volunteerRankingFragment = new VolunteerRankingFragment();
         volunteerScanFragment = new VolunteerScanFragment();
 
-        //volunteerToolbar = findViewById(R.id.volunteer_toolbar);
-        //setSupportActionBar(volunteerToolbar);
+        volunteerToolbar = findViewById(R.id.volunteer_toolbar);
+        setSupportActionBar(volunteerToolbar);
 
         volunteerDrawerLayout = findViewById(R.id.volunteer_drawer);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, volunteerDrawerLayout, R.string.nav_open, R.string.nav_close);
         volunteerDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         navigationView = findViewById(R.id.volunteer_nav_view);
         navigationView.setNavigationItemSelectedListener(navSelected);

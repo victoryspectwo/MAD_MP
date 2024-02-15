@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ftgyh"
+            android:text="Error"
             android:textSize="20dp"
             android:layout_marginTop="8dp"
             android:textStyle="bold" />
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/accept_green"
-            android:text="hwgwf"
+            android:text="Error"
             android:textSize="60dp" />
 
         <ProgressBar
@@ -80,6 +80,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" exp left to leveling up!" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="50dp">
+
+            <Button
+                android:id="@+id/volun_edit_name_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Name &amp; Password"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/dark_green"/>
+
+            <Button
+                android:id="@+id/volun_edit_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Avatar"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/dark_green"/>
+
+            <Button
+                android:id="@+id/volun_edit_avatar_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Avatar Frame"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/dark_green"/>
 
         </LinearLayout>
 

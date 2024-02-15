@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="avatar_frame_arrays">
-        <item>custom_button</item>
-        <item>custom_expbar</item>
+        <item>avatar_frame_red</item>
+        <item>avatar_frame_orange</item>
+        <item>avatar_frame_yellow</item>
+        <item>avatar_frame_green</item>
+        <item>avatar_frame_blue</item>
+        <item>avatar_frame_purple</item>
         <!-- Add more items as needed for each image -->
     </array>
 </resources>

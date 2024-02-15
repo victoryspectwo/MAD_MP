@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light"
+    android:background="@color/dark_green"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
@@ -16,11 +16,25 @@
         android:orientation="horizontal"
         android:paddingTop="20dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/volun_nav_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/placeholder" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Avatar Frame -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/volun_nav_frame"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/avatar_frame_red"
+                android:layout_gravity="center"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/volun_nav_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/placeholder" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

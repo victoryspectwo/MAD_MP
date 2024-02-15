@@ -39,7 +39,8 @@
             android:exported="false" />
         <activity
             android:name=".volunteer.VolunteerMain"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
         <activity
             android:name=".volunteer.CaptureAct"
             android:screenOrientation="portrait"

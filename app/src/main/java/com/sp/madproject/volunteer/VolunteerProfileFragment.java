@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +25,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sp.madproject.R;
 
 public class VolunteerProfileFragment extends Fragment {
+    private Button editNamePasswordButton;
+    private Button editAvatarButton;
+    private Button editFrameButton;
     public VolunteerProfileFragment() {
         // Required empty public constructor
     }
@@ -55,6 +59,33 @@ public class VolunteerProfileFragment extends Fragment {
             bottomNavigationView.setVisibility(View.GONE);
         }
 
+        editNamePasswordButton = view.findViewById(R.id.volun_edit_name_password);
+        editNamePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), edit_profile.class);
+                startActivity(intent);
+            }
+        });
+
+        editAvatarButton = view.findViewById(R.id.volun_edit_avatar);
+        editAvatarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), edit_profile.class);
+                startActivity(intent);
+            }
+        });
+
+        editFrameButton = view.findViewById(R.id.volun_edit_avatar_frame);
+        editFrameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), edit_avatar_frame.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -67,24 +98,5 @@ public class VolunteerProfileFragment extends Fragment {
         if (bottomNavigationView != null) {
             bottomNavigationView.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.volunteer_edit_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        if (item.getItemId() == R.id.volun_edit_name_password) {
-            intent = new Intent(requireActivity(), edit_profile.class);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.volun_edit_frame) {
-            intent = new Intent(requireActivity(), edit_avatar_frame.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

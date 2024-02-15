@@ -18,8 +18,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,6 +34,7 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.sp.madproject.ActionBarVisibilityListener;
 import com.sp.madproject.R;
+import com.sp.madproject.volunteer.GPSTracker;
 
 
 public class AddFragment extends Fragment {
@@ -44,6 +49,7 @@ public class AddFragment extends Fragment {
     private TextInputLayout locationLayout;
     private TextInputEditText eventLocation;
 
+    private Button getLocationButton;
     private Button submitButton;
 
     private String imgURI;
@@ -85,6 +91,23 @@ public class AddFragment extends Fragment {
                 }
             }
         });
+
+        getLocationButton = view.findViewById(R.id.get_location_button);
+        getLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GPSTracker gpsTracker = new GPSTracker(getActivity());
+
+                if (gpsTracker.canGetLocation()) {
+                    double latitude = gpsTracker.getLatitude();
+                    double longitude = gpsTracker.getLongitude();
+
+                    eventLocation.setText(String.valueOf(latitude) + ", " + String.valueOf(longitude));
+                } else
+                    Toast.makeText(getActivity(), "Error gaining location.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         submitButton = view.findViewById(R.id.submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
