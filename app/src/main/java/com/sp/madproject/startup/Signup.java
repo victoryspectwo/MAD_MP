@@ -121,10 +121,10 @@ public class Signup extends AppCompatActivity {
                                 volunteer.put("username", username);
                                 volunteer.put("email", email);
                                 volunteer.put("type", userType);
-                                volunteer.put("rank", null);
+                                volunteer.put("rank", 0);
                                 volunteer.put("xp_points", 0);
                                 volunteer.put("pfp", null);
-                                volunteer.put("frame_id", "red");
+                                volunteer.put("frame_id", null);
                                 Toast.makeText(Signup.this, "Volunteer " + username +" created", Toast.LENGTH_SHORT).show();
                                 //document users deal with user signup details
                                 documentReference.set(volunteer).addOnSuccessListener(new OnSuccessListener<Void>() {
