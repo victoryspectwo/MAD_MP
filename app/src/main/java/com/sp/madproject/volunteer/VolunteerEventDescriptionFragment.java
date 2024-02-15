@@ -2,13 +2,29 @@ package com.sp.madproject.volunteer;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.sp.madproject.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,33 +33,28 @@ import com.sp.madproject.R;
  */
 public class VolunteerEventDescriptionFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // Keys for retrieving data from arguments bundle
+    private static final String ARG_EVENT_TITLE = "event_title";
+    private static final String ARG_EVENT_DESCRIPTION = "event_description";
+    private static final String ARG_EVENT_IMAGE_URL = "event_image_url";
+    private Button acceptButton;
+    private Button declineButton;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String eventTitle;
+    private String eventDescription;
+    private String eventImageUrl;
 
-    public VolunteerEventDescriptionFragment() {
-        // Required empty public constructor
-    }
+    private String volunID;
+    private FirebaseFirestore mStore;
+    private FirebaseAuth mAuth;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment VolunteerEventDescriptionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static VolunteerEventDescriptionFragment newInstance(String param1, String param2) {
+    // Factory method to create a new instance of VolunteerEventDescriptionFragment
+    public static VolunteerEventDescriptionFragment newInstance(String eventTitle, String eventDescription, String eventImageUrl) {
         VolunteerEventDescriptionFragment fragment = new VolunteerEventDescriptionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_EVENT_TITLE, eventTitle);
+        args.putString(ARG_EVENT_DESCRIPTION, eventDescription);
+        args.putString(ARG_EVENT_IMAGE_URL, eventImageUrl);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +62,79 @@ public class VolunteerEventDescriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
+        // Retrieve arguments and store data
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            eventTitle = getArguments().getString(ARG_EVENT_TITLE);
+            eventDescription = getArguments().getString(ARG_EVENT_DESCRIPTION);
+            eventImageUrl = getArguments().getString(ARG_EVENT_IMAGE_URL);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_volunteer_event_description, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_volunteer_event_description, container, false);
+
+        // Find TextViews
+        ImageView eventImageView = view.findViewById(R.id.imageView3);
+        TextView eventTitleTextView = view.findViewById(R.id.textView3);
+        TextView eventDescriptionTextView = view.findViewById(R.id.textView6);
+
+        volunID = mAuth.getCurrentUser().getUid();
+
+        Glide.with(this)
+                .load(eventImageUrl)
+                .apply(new RequestOptions().placeholder(R.drawable.organiser_icon))
+                .into(eventImageView);
+
+        // Set text of TextViews with event data
+        eventTitleTextView.setText(eventTitle);
+        eventDescriptionTextView.setText(eventDescription);
+
+        acceptButton = view.findViewById(R.id.button3);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDocument();
+                getActivity().onBackPressed();
+            }
+        });
+
+        declineButton = view.findViewById(R.id.button4);
+        declineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return to previous fragment
+                getActivity().onBackPressed();
+            }
+        });
+
+        return view;
+    }
+
+    private void createDocument() {
+        // Create a new document with a generated ID
+        Map<String, Object> data = new HashMap<>();
+        data.put("eventTitle", eventTitle);
+        data.put("eventDescription", eventDescription);
+        data.put("volunteer", volunID);
+
+        mStore.collection("acceptedEvents")
+                .add(data)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            if (getContext() != null) {
+                            }
+                        } else {
+                            if (getContext() != null) {
+                                Toast.makeText(getContext(), "Failed to add event to Firestore", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+        Toast.makeText(getContext(), "Event accepted and added to Firestore", Toast.LENGTH_SHORT).show();
     }
 }

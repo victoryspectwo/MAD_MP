@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,13 +34,13 @@ import com.sp.madproject.organiser.OrgEvents;
 
 import java.util.ArrayList;
 
-public class VolunteerEventFragment extends Fragment {
-    RecyclerView recyclerView;
-    VolunAvailableEventAdapter adapter;
-    ArrayList<VolunAvailableEvent> volunAvailableEventArrayList;
+public class VolunteerEventFragment extends Fragment implements VolunAvailableEventAdapter.OnItemClickListener{
+    private RecyclerView recyclerView;
+    private VolunAvailableEventAdapter adapter;
+    private ArrayList<VolunAvailableEvent> volunAvailableEventArrayList;
     private TabHost host;
-    FirebaseAuth mAuth;
-    FirebaseFirestore mStore;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class VolunteerEventFragment extends Fragment {
 
         mStore = FirebaseFirestore.getInstance();
         volunAvailableEventArrayList = new ArrayList<VolunAvailableEvent>();
-        adapter = new VolunAvailableEventAdapter(getContext(), volunAvailableEventArrayList);
+        adapter = new VolunAvailableEventAdapter(getContext(), volunAvailableEventArrayList, this);
 
         recyclerView.setAdapter(adapter);
 
@@ -107,5 +108,14 @@ public class VolunteerEventFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onItemClick(VolunAvailableEvent item) {
+        VolunteerEventDescriptionFragment fragment = VolunteerEventDescriptionFragment.newInstance(item.getEvent_title(), item.getEvent_desc(), item.getEvent_img());
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.volunFragmentContainer, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
