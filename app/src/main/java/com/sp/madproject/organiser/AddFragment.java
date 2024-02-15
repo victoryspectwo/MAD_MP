@@ -45,9 +45,12 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.sp.madproject.ActionBarVisibilityListener;
 import com.sp.madproject.R;
 import com.sp.madproject.volunteer.GPSTracker;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class AddFragment extends Fragment {
@@ -226,9 +229,59 @@ public class AddFragment extends Fragment {
                     if (result != null){
                         headerImage.setImageURI(result);
                         imgURI = result.toString(); //the image has now been saved as a string
+
+                        // Upload the image to Firebase Storage
+                        uploadImageToFirebaseStorage(result);
                     }
                 }
             });
+
+    private void uploadImageToFirebaseStorage(Uri imageUri) {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + UUID.randomUUID().toString());
+
+        storageRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    // Image uploaded successfully, get the download URL
+                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        // Save the image URL to Firestore
+                        saveImageUrlToFirestore(uri.toString());
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    // Handle any errors
+                    Log.e(TAG, "Error uploading image to Firebase Storage", e);
+                    Toast.makeText(getActivity(), "Failed to upload image. Please try again.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void saveImageUrlToFirestore(String imageUrl) {
+        // Add the image URL to the Firestore document
+        Map<String, Object> event = new HashMap<>();
+        event.put("event_img", imageUrl);
+
+        // Add other event details
+        String location = eventLocation.getText().toString();
+        String desc = eventDesc.getText().toString();
+        String name = eventTitle.getText().toString();
+        String organiserID = mAuth.getCurrentUser().getUid();
+        event.put("event_title", name);
+        event.put("event_location", location);
+        event.put("event_desc", desc);
+        event.put("organiser", organiserID);
+
+        // Add the event document to Firestore
+        CollectionReference eventsCollection = mStore.collection("events");
+        eventsCollection.add(event)
+                .addOnSuccessListener(documentReference -> {
+                    // Handle success
+                    Toast.makeText(getActivity(), "Event added successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    // Handle errors
+                    Log.e(TAG, "Error adding event", e);
+                    Toast.makeText(getActivity(), "Failed to add event. Please try again.", Toast.LENGTH_SHORT).show();
+                });
+    }
 
     @Override
     public void onResume() {

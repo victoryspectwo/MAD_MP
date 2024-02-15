@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sp.madproject.R;
 import com.sp.madproject.organiser.OrgEvents;
 
@@ -43,7 +45,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
         holder.eventTitle.setText(events.event_title);
         holder.eventLoc.setText(events.event_location);
         holder.eventDesc.setText(events.event_desc);
-        holder.icon.setImageResource(R.drawable.icon_addphoto);
+
+        // Load image using Glide
+        Glide.with(context)
+                .load(events.getEvent_img())
+                .apply(new RequestOptions().placeholder(R.drawable.organiser_icon)) // Placeholder image while loading
+                .into(holder.icon);
 
         /*
         if (events.getEvent_img() != null && !events.getEvent_img().isEmpty()) {

@@ -35,9 +35,10 @@
         </FrameLayout>
 
         <TextView
+            android:id="@+id/volun_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/volun_name"
+            android:text="Error"
             android:textSize="20dp"
             android:layout_marginTop="8dp"
             android:textStyle="bold" />

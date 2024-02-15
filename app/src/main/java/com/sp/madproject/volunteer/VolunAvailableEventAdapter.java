@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sp.madproject.R;
 
 import java.util.ArrayList;
@@ -39,6 +41,12 @@ public class VolunAvailableEventAdapter extends RecyclerView.Adapter<VolunAvaila
         holder.volunEventName.setText(volunAvailableEvent.event_title);
         holder.volunEventDesc.setText(volunAvailableEvent.event_desc);
         holder.volunEventLoc.setText(volunAvailableEvent.event_location);
+
+        // Load image using Glide
+        Glide.with(context)
+                .load(volunAvailableEvent.event_img)
+                .apply(new RequestOptions().placeholder(R.drawable.organiser_icon))
+                .into(holder.volunIcon);
     }
 
     @Override
