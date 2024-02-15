@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AboutFragment">
+    tools:context=".volunteer.AboutFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,14 +32,14 @@
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hi! I want to die"
+                android:text="Volunteer side: Developed by Neo Wei "
                 android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pls end my suffering :3"
+                android:text="Organiser side: Developed by Vikrant"
                 android:textAlignment="center" />
 
             <TextView
@@ -53,7 +53,7 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lots of shit not done"
+                android:text="This is a cool app"
                 android:textAlignment="center" />
 
         </LinearLayout>

@@ -27,6 +27,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
         this.eventArrayList = eventArrayList;
     }
 
+    public void deleteEvent(int position){
+        eventArrayList.remove(position);
+        notifyItemRemoved(position);
+    }
+
 
     @NonNull
     @Override

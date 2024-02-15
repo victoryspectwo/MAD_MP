@@ -162,13 +162,13 @@ public class AddFragment extends Fragment {
                 if (name.length() < 5){
                     titleLayout.setError("Event name must be at least 6 characters");
                 }
-                if (rating == 1){
+                if (rating <= 1 || rating > 0){
                     scale = "Small";
                     Log.d(TAG, "This is a small event");
-                } else if (rating == 2) {
+                } else if (rating <= 2 || rating > 1) {
                     scale = "Medium";
                     Log.d(TAG, "This is a Medium sized event");
-                } else if (rating == 3){
+                } else if (rating <= 3 || rating > 2){
                     scale = "Large";
                     Log.d(TAG, "This is a Large event");
                 }
