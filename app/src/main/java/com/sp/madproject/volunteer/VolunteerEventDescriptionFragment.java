@@ -13,13 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sp.madproject.R;
 
 
-=======
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,15 +37,13 @@ import java.util.Map;
  * Use the {@link VolunteerEventDescriptionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
->>>>>>> 8f50408e8076a17476643fb406d6922a77acd414
+
 public class VolunteerEventDescriptionFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseFirestore mStore;
 
 
-<<<<<<< HEAD
 
-=======
     // Keys for retrieving data from arguments bundle
     private static final String ARG_EVENT_TITLE = "event_title";
     private static final String ARG_EVENT_DESCRIPTION = "event_description";
@@ -57,14 +54,9 @@ public class VolunteerEventDescriptionFragment extends Fragment {
     private String eventTitle;
     private String eventDescription;
     private String eventImageUrl;
->>>>>>> 8f50408e8076a17476643fb406d6922a77acd414
 
     private String volunID;
-    private FirebaseFirestore mStore;
-    private FirebaseAuth mAuth;
 
-<<<<<<< HEAD
-=======
     // Factory method to create a new instance of VolunteerEventDescriptionFragment
     public static VolunteerEventDescriptionFragment newInstance(String eventTitle, String eventDescription, String eventImageUrl) {
         VolunteerEventDescriptionFragment fragment = new VolunteerEventDescriptionFragment();
@@ -75,14 +67,11 @@ public class VolunteerEventDescriptionFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
->>>>>>> 8f50408e8076a17476643fb406d6922a77acd414
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-
-=======
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
         // Retrieve arguments and store data
@@ -91,7 +80,7 @@ public class VolunteerEventDescriptionFragment extends Fragment {
             eventDescription = getArguments().getString(ARG_EVENT_DESCRIPTION);
             eventImageUrl = getArguments().getString(ARG_EVENT_IMAGE_URL);
         }
->>>>>>> 8f50408e8076a17476643fb406d6922a77acd414
+
     }
 
     @Override
@@ -135,6 +124,10 @@ public class VolunteerEventDescriptionFragment extends Fragment {
         return view;
     }
 
+
+
+
+
     private void createDocument() {
         // Create a new document with a generated ID
         Map<String, Object> data = new HashMap<>();
@@ -143,7 +136,7 @@ public class VolunteerEventDescriptionFragment extends Fragment {
         data.put("volunteer", volunID);
 
         mStore.collection("acceptedEvents")
-                .add(data)
+                .add(data)//add data to acceptedEvents here
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {

@@ -143,9 +143,11 @@ public class AddFragment extends Fragment {
                 String location, desc, name;
                 Float rating = eventScale.getRating();
                 String scale = "";
+
                 location = eventLocation.getText().toString();
                 desc = eventDesc.getText().toString();
                 name = eventTitle.getText().toString();
+                String qrstring = name + location;
 
                 if (TextUtils.isEmpty(location)){
                     Toast.makeText(getActivity(), "Username required.", Toast.LENGTH_SHORT).show();
@@ -182,6 +184,7 @@ public class AddFragment extends Fragment {
                 event.put("event_img", imgURI); //need to convert to an image back at Events
                 event.put("organiser", organiserID);
                 event.put("scale", scale); //where and when to deal with the user XP?
+                event.put("QRstring", qrstring); //send the qr string
 
                 eventsCollection.add(event).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -269,6 +272,7 @@ public class AddFragment extends Fragment {
         event.put("event_desc", desc);
         event.put("organiser", organiserID);
 
+
         // Add the event document to Firestore
         CollectionReference eventsCollection = mStore.collection("events");
         eventsCollection.add(event)
@@ -308,5 +312,6 @@ public class AddFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
 
 }
