@@ -1,36 +1,54 @@
 package com.sp.madproject.organiser;
 
+import android.media.metrics.Event;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.CustomFloatAttributes;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sp.madproject.ActionBarVisibilityListener;
 import com.sp.madproject.R;
+import com.sp.madproject.startup.Signup;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
 public class AddFragment extends Fragment {
 
-    FirebaseAuth cmAuth;
+    FirebaseAuth mAuth;
     FirebaseFirestore mStore;
+
+    public int count = 0;
+    public static final String TAG = "TAG";
     private ImageView headerImage;
     private FloatingActionButton imageAdd;
     private TextInputLayout titleLayout;
@@ -44,6 +62,9 @@ public class AddFragment extends Fragment {
 
     private String imgURI;
 
+    String organiserID;
+
+
     public AddFragment() {
         // Required empty public constructor
     }
@@ -52,6 +73,8 @@ public class AddFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mStore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -83,13 +106,62 @@ public class AddFragment extends Fragment {
         });
 
         submitButton = view.findViewById(R.id.submit_button);
-        //submitButton.setOnClickListener();
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String location, desc, name;
+                location = eventLocation.getText().toString();
+                desc = eventDesc.getText().toString();
+                name = eventTitle.getText().toString();
+
+                if (TextUtils.isEmpty(location)){
+                    Toast.makeText(getActivity(), "Username required.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(desc)){
+                    Toast.makeText(getActivity(), "Valid email required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(name)){
+                    Toast.makeText(getActivity(), "Password required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (name.length() < 5){
+                    titleLayout.setError("Event name must be at least 6 characters");
+                }
+
+                organiserID = mAuth.getCurrentUser().getUid();
+                CollectionReference eventsCollection = mStore.collection("events");
+                Map<String, Object> event = new HashMap<>();
+                event.put("event_title", name);
+                event.put("event_location", location);
+                event.put("event_desc", desc);
+                event.put("event_img", imgURI);
+                event.put("organiser", organiserID);
+
+                eventsCollection.add(event).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getActivity(), "Event added successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                }) .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle errors
+                        Log.e(TAG, "Error adding event", e);
+                        Toast.makeText(getActivity(), "Failed to add event. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+            }
+        });
 
 
         ((ActionBarVisibilityListener) requireActivity()).setActionBarVisibility(false);
         return view;
     }
-
 
     ActivityResultLauncher<String[]> getContent = registerForActivityResult(
             new ActivityResultContracts.OpenDocument(),
@@ -102,6 +174,8 @@ public class AddFragment extends Fragment {
                     }
                 }
             });
+
+
 
     @Override
     public void onResume() {

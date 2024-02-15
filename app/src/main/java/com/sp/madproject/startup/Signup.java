@@ -142,6 +142,7 @@ public class Signup extends AppCompatActivity {
                                     }
                                 } else {
                                     Toast.makeText(Signup.this, "Signup failed. Please try again." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    mAuth.signOut();
                                     progressBar.setVisibility(View.GONE);
                                 }
                             }

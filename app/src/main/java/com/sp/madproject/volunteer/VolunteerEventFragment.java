@@ -3,6 +3,7 @@ package com.sp.madproject.volunteer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
@@ -12,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.TabHost;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sp.madproject.ActionBarVisibilityListener;
 import com.sp.madproject.R;
 
-public class VolunteerEventFragment extends Fragment {
+public class VolunteerEventFragment extends Fragment{
     private TabHost host;
 
     @Override
@@ -45,4 +47,8 @@ public class VolunteerEventFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_volunteer_event, container, false);
     }
+
+
+
+
 }

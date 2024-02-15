@@ -62,10 +62,10 @@
         </activity>
         <activity
             android:name=".startup.UserSelectActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".organiser.OrganiserMainActivity"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>

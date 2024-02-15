@@ -6,7 +6,7 @@
     tools:context=".organiser.EventsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/avail_events"
+        android:id="@+id/posted_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
