@@ -36,9 +36,13 @@ import java.util.ArrayList;
 
 public class VolunteerEventFragment extends Fragment implements VolunAvailableEventAdapter.OnItemClickListener{
     private RecyclerView recyclerView;
+    private RecyclerView recyclerView2;
     private VolunAvailableEventAdapter adapter;
+    private VolunActiveEventAdapter adapter2;
     private ArrayList<VolunAvailableEvent> volunAvailableEventArrayList;
+    private ArrayList<VolunActiveEvent> volunActiveEventArrayList;
     private TabHost host;
+    private String volunID;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
 
@@ -52,20 +56,32 @@ public class VolunteerEventFragment extends Fragment implements VolunAvailableEv
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_volunteer_event, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        volunID = mAuth.getCurrentUser().getUid();
+
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.volun_available_event);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        recyclerView2 = view.findViewById(R.id.volun_active_event);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView2.setItemAnimator(new DefaultItemAnimator());
+
         mStore = FirebaseFirestore.getInstance();
         volunAvailableEventArrayList = new ArrayList<VolunAvailableEvent>();
+        volunActiveEventArrayList = new ArrayList<VolunActiveEvent>();
         adapter = new VolunAvailableEventAdapter(getContext(), volunAvailableEventArrayList, this);
+        adapter2 = new VolunActiveEventAdapter(getContext(), volunActiveEventArrayList, this);
 
         recyclerView.setAdapter(adapter);
+        recyclerView2.setAdapter(adapter2);
 
         // Call method to listen for Firestore events
         eventChangeListener();
+        eventChangeListener2();
 
         host = view.findViewById(R.id.volunteer_event_tabHost);
         host.setup();
@@ -110,9 +126,32 @@ public class VolunteerEventFragment extends Fragment implements VolunAvailableEv
                 });
     }
 
+    private void eventChangeListener2() {
+        mStore.collection("acceptedEvents")
+                .whereEqualTo("volunteer", volunID).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+
+                        for (DocumentChange dc1 : value.getDocumentChanges()){
+
+                            if (dc1.getType() == DocumentChange.Type.ADDED){
+
+                                volunActiveEventArrayList.add(dc1.getDocument().toObject(VolunActiveEvent.class));
+                            }
+
+                            adapter2.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onItemClick(VolunAvailableEvent item) {
-        VolunteerEventDescriptionFragment fragment = VolunteerEventDescriptionFragment.newInstance(item.getEvent_title(), item.getEvent_desc(), item.getEvent_img());
+        VolunteerEventDescriptionFragment fragment = VolunteerEventDescriptionFragment.newInstance(item.getEvent_title(), item.getEvent_desc(), item.getEvent_img(), item.getEvent_location());
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.volunFragmentContainer, fragment);
         transaction.addToBackStack(null);

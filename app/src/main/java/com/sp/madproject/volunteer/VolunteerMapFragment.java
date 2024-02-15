@@ -22,6 +22,14 @@ public class VolunteerMapFragment extends Fragment {
     private GPSTracker gpsTracker;
     private double latitude = 0.0d;
     private double longitude = 0.0d;
+    private double eventLatitude;
+    private double eventLongitude;
+
+    // Constructor to receive event location
+    public VolunteerMapFragment(double eventLatitude, double eventLongitude) {
+        this.eventLatitude = eventLatitude;
+        this.eventLongitude = eventLongitude;
+    }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -49,6 +57,10 @@ public class VolunteerMapFragment extends Fragment {
                 Toast.makeText(getActivity(), "Error gaining location.\nSome map functionalities may be disabled.", Toast.LENGTH_SHORT).show();
         }
     };
+
+    public VolunteerMapFragment() {
+
+    }
 
     @Nullable
     @Override

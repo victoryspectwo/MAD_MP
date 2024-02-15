@@ -32,28 +32,28 @@
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hi! I want to die"
+                android:text="Hi! We are VolunView!"
                 android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pls end my suffering :3"
+                android:text="Your 1 stop shop for volunteering work!"
                 android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Version 1.0"
+                android:text="Version 1.1"
                 android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lots of shit not done"
+                android:text="Enjoy! :3"
                 android:textAlignment="center" />
 
         </LinearLayout>

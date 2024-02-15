@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/accept_green"
-            android:text="Error"
+            android:text="Veteran"
             android:textSize="60dp" />
 
         <ProgressBar

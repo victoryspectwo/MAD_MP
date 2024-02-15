@@ -1,10 +1,13 @@
 package com.sp.madproject.volunteer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sp.madproject.R;
 
@@ -37,24 +39,28 @@ public class VolunteerEventDescriptionFragment extends Fragment {
     private static final String ARG_EVENT_TITLE = "event_title";
     private static final String ARG_EVENT_DESCRIPTION = "event_description";
     private static final String ARG_EVENT_IMAGE_URL = "event_image_url";
+    private static final String ARG_EVENT_LOCATION = "event_location";
+    private Button mapButton;
     private Button acceptButton;
     private Button declineButton;
 
     private String eventTitle;
     private String eventDescription;
     private String eventImageUrl;
+    private String eventLocation;
 
     private String volunID;
     private FirebaseFirestore mStore;
     private FirebaseAuth mAuth;
 
     // Factory method to create a new instance of VolunteerEventDescriptionFragment
-    public static VolunteerEventDescriptionFragment newInstance(String eventTitle, String eventDescription, String eventImageUrl) {
+    public static VolunteerEventDescriptionFragment newInstance(String eventTitle, String eventDescription, String eventImageUrl, String eventLocation) {
         VolunteerEventDescriptionFragment fragment = new VolunteerEventDescriptionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_EVENT_TITLE, eventTitle);
         args.putString(ARG_EVENT_DESCRIPTION, eventDescription);
         args.putString(ARG_EVENT_IMAGE_URL, eventImageUrl);
+        args.putString(ARG_EVENT_LOCATION, eventLocation);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,6 +75,7 @@ public class VolunteerEventDescriptionFragment extends Fragment {
             eventTitle = getArguments().getString(ARG_EVENT_TITLE);
             eventDescription = getArguments().getString(ARG_EVENT_DESCRIPTION);
             eventImageUrl = getArguments().getString(ARG_EVENT_IMAGE_URL);
+            eventLocation = getArguments().getString(ARG_EVENT_LOCATION);
         }
     }
 
@@ -91,6 +98,21 @@ public class VolunteerEventDescriptionFragment extends Fragment {
         // Set text of TextViews with event data
         eventTitleTextView.setText(eventTitle);
         eventDescriptionTextView.setText(eventDescription);
+        mapButton = view.findViewById(R.id.button2);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            String[] numbers = eventLocation.split(",");
+
+            double eventLatitude = Double.parseDouble(numbers[0]);
+            double eventLongitude = Double.parseDouble(numbers[1]);
+            @Override
+            public void onClick(View v) {
+                VolunteerMapFragment mapFragment = new VolunteerMapFragment(eventLatitude, eventLongitude);
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.volunFragmentContainer, mapFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         acceptButton = view.findViewById(R.id.button3);
         acceptButton.setOnClickListener(new View.OnClickListener() {
