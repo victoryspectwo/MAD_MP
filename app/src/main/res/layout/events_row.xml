@@ -25,7 +25,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/icon"
+                android:id="@+id/icon_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="1dp"
@@ -46,8 +46,20 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/eventDescription"
-                app:layout_constraintStart_toEndOf="@+id/icon"
+                app:layout_constraintStart_toEndOf="@+id/icon_row"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/eventLoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Location"
+                android:textColor="@color/dark_green"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/icon_row"
+                app:layout_constraintTop_toBottomOf="@+id/eventName"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="5dp" />
 
             <TextView
                 android:id="@+id/eventDescription"
@@ -61,7 +73,7 @@
                 android:textColor="@color/dark_green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/icon"
+                app:layout_constraintStart_toEndOf="@+id/icon_row"
                 app:layout_constraintTop_toBottomOf="@+id/eventName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
