@@ -23,7 +23,7 @@ public class VolunteerScanFragment extends Fragment {
         if(result.getContents() != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             builder.setTitle("Result");
-            builder.setMessage(result.getContents());
+            builder.setMessage("Scanned!");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
