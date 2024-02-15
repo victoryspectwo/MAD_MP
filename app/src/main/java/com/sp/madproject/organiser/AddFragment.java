@@ -225,7 +225,7 @@ public class AddFragment extends Fragment {
     }
 
     private void generateQR() {
-        String text = "tgyh"; //edit_input.getText().toString().trim();
+        String text = eventTitle.getText().toString() + eventLocation.getText().toString(); //edit_input.getText().toString().trim();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, 1200, 1200);

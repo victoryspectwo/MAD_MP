@@ -50,6 +50,7 @@ public class OrganiserMainActivity extends AppCompatActivity implements ActionBa
         navView.setOnItemSelectedListener(menuSelected);
         addFragment = new AddFragment();
         eventsFragment = new EventsFragment();
+        mapsFragment = new MapsFragment();
     }
 
     @Override
