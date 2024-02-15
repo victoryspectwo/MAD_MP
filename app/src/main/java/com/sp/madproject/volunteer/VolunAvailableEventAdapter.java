@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,18 +13,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.navigation.NavigationBarView;
 import com.sp.madproject.R;
 
 import java.util.ArrayList;
 
 public class VolunAvailableEventAdapter extends RecyclerView.Adapter<VolunAvailableEventAdapter.MyViewHolder> {
+    private Context context;
+    private static ArrayList<VolunAvailableEvent> volunAvailableEventArrayList;
+    private static OnItemClickListener listener;
 
-    Context context;
-    ArrayList<VolunAvailableEvent> VolunAvailableEventArrayList;
+    // Define the OnItemClickListener interface
+    public interface OnItemClickListener {
+        void onItemClick(VolunAvailableEvent item);
+    }
 
-    public VolunAvailableEventAdapter(Context context, ArrayList<VolunAvailableEvent> volunAvailableEventArrayList) {
+    // Constructor
+    public VolunAvailableEventAdapter(Context context, ArrayList<VolunAvailableEvent> volunAvailableEventArrayList, OnItemClickListener listener) {
         this.context = context;
-        this.VolunAvailableEventArrayList = volunAvailableEventArrayList;
+        VolunAvailableEventAdapter.volunAvailableEventArrayList = volunAvailableEventArrayList;
+        VolunAvailableEventAdapter.listener = listener;
     }
 
     @NonNull
@@ -36,7 +45,7 @@ public class VolunAvailableEventAdapter extends RecyclerView.Adapter<VolunAvaila
 
     @Override
     public void onBindViewHolder(@NonNull VolunAvailableEventAdapter.MyViewHolder holder, int position) {
-        VolunAvailableEvent volunAvailableEvent = VolunAvailableEventArrayList.get(position);
+        VolunAvailableEvent volunAvailableEvent = volunAvailableEventArrayList.get(position);
 
         holder.volunEventName.setText(volunAvailableEvent.event_title);
         holder.volunEventDesc.setText(volunAvailableEvent.event_desc);
@@ -51,7 +60,7 @@ public class VolunAvailableEventAdapter extends RecyclerView.Adapter<VolunAvaila
 
     @Override
     public int getItemCount() {
-        return VolunAvailableEventArrayList.size();
+        return volunAvailableEventArrayList != null ? volunAvailableEventArrayList.size() : 0;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -63,6 +72,16 @@ public class VolunAvailableEventAdapter extends RecyclerView.Adapter<VolunAvaila
             volunEventDesc = itemView.findViewById(R.id.volunEventDescription);
             volunEventLoc = itemView.findViewById(R.id.volunEventLoc);
             volunIcon = itemView.findViewById(R.id.volun_icon_row);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(volunAvailableEventArrayList.get(position));
+                    }
+                }
+            });
         }
     }
 }
