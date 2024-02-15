@@ -25,8 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sp.madproject.R;
 
 public class VolunteerProfileFragment extends Fragment {
-    private Button editNamePasswordButton;
-    private Button editAvatarButton;
+    private Button editNamePasswordAvatarButton;
     private Button editFrameButton;
     public VolunteerProfileFragment() {
         // Required empty public constructor
@@ -59,17 +58,8 @@ public class VolunteerProfileFragment extends Fragment {
             bottomNavigationView.setVisibility(View.GONE);
         }
 
-        editNamePasswordButton = view.findViewById(R.id.volun_edit_name_password);
-        editNamePasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), edit_profile.class);
-                startActivity(intent);
-            }
-        });
-
-        editAvatarButton = view.findViewById(R.id.volun_edit_avatar);
-        editAvatarButton.setOnClickListener(new View.OnClickListener() {
+        editNamePasswordAvatarButton = view.findViewById(R.id.volun_edit_name_password);
+        editNamePasswordAvatarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), edit_profile.class);
