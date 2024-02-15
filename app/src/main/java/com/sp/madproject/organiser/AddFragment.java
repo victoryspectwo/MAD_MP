@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -64,6 +65,7 @@ public class AddFragment extends Fragment {
     private TextInputEditText eventDesc;
     private TextInputLayout locationLayout;
     private TextInputEditText eventLocation;
+    private RatingBar eventScale;
 
     private Button getLocationButton;
     private Button submitButton;
@@ -102,6 +104,9 @@ public class AddFragment extends Fragment {
 
         headerImage = view.findViewById(R.id.headerImage);
         imageAdd = view.findViewById(R.id.addImage);
+
+        eventScale = view.findViewById(R.id.eventScale);
+
         imageAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +138,8 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String location, desc, name;
+                Float rating = eventScale.getRating();
+                String scale = "";
                 location = eventLocation.getText().toString();
                 desc = eventDesc.getText().toString();
                 name = eventTitle.getText().toString();
@@ -152,6 +159,16 @@ public class AddFragment extends Fragment {
                 if (name.length() < 5){
                     titleLayout.setError("Event name must be at least 6 characters");
                 }
+                if (rating == 1){
+                    scale = "Small";
+                    Log.d(TAG, "This is a small event");
+                } else if (rating == 2) {
+                    scale = "Medium";
+                    Log.d(TAG, "This is a Medium sized event");
+                } else if (rating == 3){
+                    scale = "Large";
+                    Log.d(TAG, "This is a Large event");
+                }
 
                 organiserID = mAuth.getCurrentUser().getUid();
                 CollectionReference eventsCollection = mStore.collection("events");
@@ -159,8 +176,9 @@ public class AddFragment extends Fragment {
                 event.put("event_title", name);
                 event.put("event_location", location);
                 event.put("event_desc", desc);
-                event.put("event_img", imgURI);
+                event.put("event_img", imgURI); //need to convert to an image back at Events
                 event.put("organiser", organiserID);
+                event.put("scale", scale); //where and when to deal with the user XP?
 
                 eventsCollection.add(event).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -225,7 +243,7 @@ public class AddFragment extends Fragment {
     }
 
     private void generateQR() {
-        String text = "tgyh"; //edit_input.getText().toString().trim();
+        String text = eventTitle.getText().toString() + eventLocation.getText().toString(); //edit_input.getText().toString().trim();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, 1200, 1200);

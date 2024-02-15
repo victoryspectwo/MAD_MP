@@ -60,14 +60,6 @@ public class Signup extends AppCompatActivity {
         mStore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        /*
-        if(mAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),OrganiserMainActivity.class));
-            finish();
-        }
-
-         */
-
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +121,10 @@ public class Signup extends AppCompatActivity {
                                 volunteer.put("username", username);
                                 volunteer.put("email", email);
                                 volunteer.put("type", userType);
+                                volunteer.put("rank", null);
+                                volunteer.put("xp_points", 0);
+                                volunteer.put("pfp", null);
+                                volunteer.put("frame_id", "red");
                                 Toast.makeText(Signup.this, "Volunteer " + username +" created", Toast.LENGTH_SHORT).show();
                                 //document users deal with user signup details
                                 documentReference.set(volunteer).addOnSuccessListener(new OnSuccessListener<Void>() {

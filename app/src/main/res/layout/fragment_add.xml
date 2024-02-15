@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".organiser.AddFragment">
 
+    <!-- Header Image -->
     <ImageView
         android:id="@+id/headerImage"
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Button to add image -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addImage"
         android:layout_width="wrap_content"
@@ -25,9 +27,9 @@
         android:backgroundTint="@color/cyan"
         android:src="@drawable/icon_addphoto"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/headerImage"
-        tools:layout_editor_absoluteY="114dp" />
+        app:layout_constraintEnd_toEndOf="@+id/headerImage" />
 
+    <!-- Title TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -46,11 +48,9 @@
             android:hint="Enter event title"
             android:layout_height="wrap_content"
             android:maxHeight="55dp"/>
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <!-- Description TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/descLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -72,8 +72,32 @@
             android:overScrollMode="always"
             android:id="@+id/eventDesc"
             android:hint="Describe your event" />
+
+        <!-- RatingBar for event scale -->
+        <TextView
+            android:id="@+id/ratingDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event scale (Small -> Medium -> Large)"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventDesc"
+            android:layout_marginTop="16dp"/>
+
+        <RatingBar
+            android:id="@+id/eventScale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="3"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/ratingDescription"
+            app:layout_constraintTop_toBottomOf="@+id/eventDesc"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Location TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/locationLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -86,21 +110,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descLayout">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/eventLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:lines="2"
-        android:hint="Enter event location (Lat, Lon)" /> <!-- Adjusted hint -->
-
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/eventLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:hint="Enter event location (Lat, Lon)" />
 
         <!-- I want to implement geocoding here! -->
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <!-- Button to get current location -->
     <Button
         android:id="@+id/get_location_button"
         android:layout_width="300dp"
@@ -119,6 +140,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationLayout" />
 
+    <!-- Button to submit entry -->
     <Button
         android:id="@+id/submit_button"
         android:layout_width="300dp"
@@ -135,7 +157,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_location_button" />
-    <!--button won't change color, figure out why-->
 
+    <!-- RatingBar for event scale -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
