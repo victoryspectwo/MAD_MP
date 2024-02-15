@@ -21,13 +21,14 @@
 
             <!-- Avatar Frame -->
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/volun_editFragment_frame"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:background="@drawable/custom_button"
                 android:layout_gravity="center"/>
 
             <!-- Actual Avatar -->
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/volun_editFragment_avatar"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:src="@drawable/placeholder"/>

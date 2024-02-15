@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +32,8 @@ import com.sp.madproject.R;
 
 public class VolunteerProfileFragment extends Fragment {
 
+    private ImageView avatarImageView;
+    private ImageView avatarFrameImageView;
     private TextView usernameView;
     private TextView rankView;
     private TextView expView;
@@ -64,6 +67,8 @@ public class VolunteerProfileFragment extends Fragment {
         expView = view.findViewById(R.id.volun_current_exp);
         progressbar = view.findViewById(R.id.volun_exp_bar);
         editNamePasswordAvatarButton = view.findViewById(R.id.volun_edit_name_password);
+        avatarImageView = view.findViewById(R.id.volun_editFragment_avatar);
+        avatarFrameImageView = view.findViewById(R.id.volun_editFragment_frame);
         editFrameButton = view.findViewById(R.id.volun_edit_avatar_frame);
 
         // Get current user's ID
@@ -78,7 +83,27 @@ public class VolunteerProfileFragment extends Fragment {
                             String username = documentSnapshot.getString("username");
                             if (username != null) {
                                 // Set the username to the appropriate TextView
-                                usernameView.setText(username);
+                                if (usernameView != null) {
+                                    usernameView.setText(username);
+                                } else {
+                                    Log.e("VolunteerMain", "Username TextView is null");
+                                }
+                            }
+                            // Get the image URL from Firestore and load it into ImageView using Glide
+                            String imageUrl = documentSnapshot.getString("pfp");
+                            if (imageUrl != null && !imageUrl.isEmpty()) {
+                                // Load image using Glide
+                                Glide.with(requireContext())
+                                        .load(imageUrl)
+                                        .placeholder(R.drawable.placeholder) // Placeholder image while loading
+                                        .into(avatarImageView);
+                            }
+                            String frameId = documentSnapshot.getString("frame_id");
+                            if (frameId != null && !frameId.isEmpty()) {
+                                // Get the resource ID of the frame drawable
+                                int frameResourceId = getResources().getIdentifier(frameId, "drawable", requireContext().getPackageName());
+                                // Set the frame drawable as background of avatarFrameImageView
+                                avatarFrameImageView.setBackgroundResource(frameResourceId);
                             }
                         }
                     }
